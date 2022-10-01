@@ -19,10 +19,9 @@ export default function LoginScreen({ navigation }) {
     <View style={styles.container}>
       <Logos></Logos>
       <View style={styles.viewtop}><Text style={styles.titleText}>Xin chào</Text></View>
-      <Text style={{ margintop: 10 }}>Đã có tài khoản?</Text>
       <Btns color="#81d3e3" Text='Đăng nhập' onPress={() => {navigation.navigate('SignIn') }} ></Btns>
-      <Text style={{ margintop: 15 }}>Chưa có tài khoản?</Text>
-            <Btns color="#8e64a1" Text='Đăng kí' onPress={() => {navigation.navigate('SignUp') }}></Btns>
+      <TouchableOpacity onPress={() => {navigation.navigate('SignUp') }}><Text>Chưa có tài khoản?</Text></TouchableOpacity>
+            {/* <Btns color="#8e64a1" Text='Đăng kí' onPress={() => {navigation.navigate('SignUp') }}></Btns> */}
       {/* <View style={{margin: 10}}><TouchableOpacity onPress={() => {navigation.navigate('SignInScreen') }} style={styles.BtnC}>
         <Text>Log In</Text>
       </TouchableOpacity></View>
