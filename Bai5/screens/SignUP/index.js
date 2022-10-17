@@ -74,13 +74,13 @@ export default function SignInScreen({ navigation }) {
   // };
   try {
     const res = await axios.get(
-      `http://192.168.0.100:3000/user/${Email.trim()}`
+      `http://192.168.32.105:3000/user/${Email.trim()}`
     );
     if (res.data.Email == Email.trim()) {
       alert("Email đã được đăng ký!");
       return;
     } else {
-      const res = await axios.post("http://192.168.0.100:3000/user/", {
+      const res = await axios.post("http://192.168.32.105:3000/user/", {
         Name: Name.trim(),
         Email: Email.trim(),
         password: password.trim(),

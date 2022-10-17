@@ -1,18 +1,40 @@
 import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, Image, TouchableOpacity, ScrollView,useEffect } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
+import { MaterialIcons } from '@expo/vector-icons';
 import MainButton from "../../src/components/MainButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 export default function DrinkDetailScreen({ navigation, route }) {
   const params = route.params;
   const { item } = params;
+  const [apidata, setApidata] = useState([]);
+  const [faves, setFaves] = useState([]);
   const onGoBack = () => {
     navigation.goBack();
   };
+  // useEffect(function () {
+  //   fetch(`http://192.168.0.100:3000/products`)
+  //     .then((e) => e.json())
+  //     .then((rep) => setApidata(rep))
+  //     .catch((err) => {
+  //       setApidata([]);
+  //     });
+  // }, []);
+//   const addFave = (apidata) => {
+//     const newFavesList = [...faves, apidata];
+//     setFaves(newFavesList);
+//     navigation.navigate("favScreen");
+//     // make this function add to faves array (new array)
+
+// };
+// useEffect(() => {
+//   setApidata()
+// }, [])
   const addTofav = async () => {
-    let favData = await AsyncStorage.getItem("favData");
+    let favData = await axios.getItem("favData");
     if (favData) {
       favData = JSON.parse(favData);
       favData.push({
@@ -38,12 +60,12 @@ export default function DrinkDetailScreen({ navigation, route }) {
         guide:item.guide,
       });
     }
-    AsyncStorage.setItem("favData", JSON.stringify(favData));
+    AsyncStaxiosorage.setItem("favData", JSON.stringify(favData));
     navigation.navigate("favScreen");
   };
   return (
     <ScrollView style={{ backgroundColor: "#fff", flex: 1 }}>
-      <View style={{ position: "relative" }}>
+      <View style={{ position: "relative",borderWidth:1 }}>
         <Image
           style={{ width: "100%", height: 300 }}
           source={{ uri: item.image }}
@@ -63,6 +85,21 @@ export default function DrinkDetailScreen({ navigation, route }) {
           }}
         >
           <Ionicons name="chevron-back-outline" size={30} color="white" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={addTofav}
+          style={{
+            backgroundColor: "#ffffff60",
+            position: "absolute",
+            top: 30,
+            left: 350,
+            width: 40,
+            height: 40,
+            direction:'rtl',
+            borderRadius: 100,
+          }}
+        >
+          <MaterialIcons name="favorite-outline" size={30} color="black" />
         </TouchableOpacity>
       </View>
       <View style={{ paddingHorizontal: 12, marginTop: 12 }}>
@@ -111,7 +148,7 @@ export default function DrinkDetailScreen({ navigation, route }) {
             fontSize: 20,
             fontWeight: "bold",
             marginTop: 10}}>Hướng Dẫn</Text>
-            <Text style={{fontFamily:"Helvetica",lineHeight:25}}>{item.guide}</Text>
+            <Text style={{lineHeight:25}}>{item.guide}</Text>
             </View>
             {/* <View
               style={{
@@ -129,11 +166,7 @@ export default function DrinkDetailScreen({ navigation, route }) {
           </View>
           
         </View>
-        <MainButton
-          onPress={addTofav}
-          style={{ marginTop: 30,marginBottom:20 }}
-          title={"THÊM VÀO YÊU THÍCH"}
-        />
+        
       </View>
     </ScrollView>
   );

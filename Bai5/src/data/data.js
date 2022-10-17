@@ -1,26 +1,34 @@
-import React from 'react';
-
+import React, {Component} from 'react';
+import { View,Text,FlatList,StyleSheet } from 'react-native-web';
 import axios from 'axios';
 
-export default class dataList extends React.Component {
-  state = {
-    persons: []
-  }
+export default class FlatListD extends Component{
 
-  componentDidMount() {
-    axios.get(`http://192.168.0.100:3000/products`)
-      .then(res => {
-        const products = res.data;
-        this.setState({ products });
-      })
-      .catch(error => console.log(error));
-  }
 
-  render() {
-    return (
-      <ul>
-        { this.state.products.map(products => <li>{products.name}</li>)}
-      </ul>
-    )
-  }
+    constructor(props){
+        super(props);
+        
+        this.state={
+            data1: [
+                
+            ]
+        }
+    }
+    render(){
+        return(
+            <FlatList
+            data={this.state.data1}
+            renderItem={({item})=>
+        <View >{item.name}</View>}
+            />
+        )
+    }
+    componentDidMount(){
+        fetch(`http://192.168.0.100:3000/products`)
+        .then((response)=>response.json())
+        .then((responseJson)=>{
+            this.setState({data1:responseJson});
+        })
+        .catch((e)=> (console.log(e)));
+}
 }
